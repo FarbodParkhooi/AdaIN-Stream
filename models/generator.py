@@ -1,4 +1,4 @@
-from utilities.adaln import AdalN
+from utilities.adain import AdalN
 from torch import nn
 import torch
 
