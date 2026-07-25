@@ -30,4 +30,20 @@ def feature_extraction(image_batch):
     return featurs
 
 def adain_target(content_feat, style_feat):
-    mean = torch.mean(style_feat, dim=[2,3], keepdim=True)
+    mean_s = torch.mean(style_feat, dim=[2,3], keepdim=True)
+    mean_c = torch.mean(content_feat, dim=[2,3], keepdim=True)
+    std_s = torch.std(style_feat, dim=[2,3], keepdim=True, unbiased=False)
+    std_c = torch.std(content_feat, dim=[2,3], keepdim=True, unbiased=False)
+    content_norm = (content_feat - mean_c) / std_c
+    target = std_s * content_norm + mean_s
+    return target
+
+def gram_matrix(feat):
+    F = torch.flatten(start_dim=2, end_dim=-1)
+    G = F @ F.transpose(1,2)
+    return G
+
+def content_loss(output_feats, content_feats, style_feats):
+    of_ext = feature_extraction(output_feats)["relu4_2"]
+    cf_ext = feature_extraction(content_feats)["relu4_2"]
+    sf_ext = feature_extraction(style_feats)["relu4_2"]
