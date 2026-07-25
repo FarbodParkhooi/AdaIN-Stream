@@ -1,4 +1,4 @@
-from utilities.adain import AdalN
+from utilities.adain import AdaIN
 from torch import nn
 import torch
 
@@ -90,7 +90,7 @@ class Generator(nn.Module):
         # Decoder
         x = self.dec_ups1(x)
         x = self.dec_cnv1(x)
-        x = AdalN(x, style[0])
+        x = AdaIN(x, style[0])
         # Skip processing
         skip = self.skip_cv1(skips.pop())
         x = torch.cat([x, skip], dim=1)
@@ -101,7 +101,7 @@ class Generator(nn.Module):
 
         x = self.dec_ups2(x)
         x = self.dec_cnv2(x)
-        x = AdalN(x, style[1])
+        x = AdaIN(x, style[1])
         # Skip processing
         skip = self.skip_cv2(skips.pop())
         x = torch.cat([x, skip], dim=1)
@@ -112,7 +112,7 @@ class Generator(nn.Module):
 
         x = self.dec_ups3(x)
         x = self.dec_cnv3(x)
-        x = AdalN(x, style[2])
+        x = AdaIN(x, style[2])
         # Skip processing
         skip = self.skip_cv3(skips.pop())
         x = torch.cat([x, skip], dim=1)

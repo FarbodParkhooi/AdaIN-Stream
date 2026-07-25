@@ -1,6 +1,6 @@
 import torch
 
-def AdalN(x, style:tuple):
+def AdaIN(x, style:tuple):
     """
         style = (gamma, beta)
     """
