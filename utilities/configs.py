@@ -14,3 +14,7 @@ class Configs():
     style_images_directory = "../style_images"
     content_batch_size = 4
     content_numworkers = 8
+
+    ## Loss Functions
+    content_weight = 1.0
+    style_weight = 10.0
